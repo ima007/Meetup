@@ -27,6 +27,8 @@ Utilities.fn.Initialize = function (BingAPIKey, LastFMAPIKey, NetflixAPIKey)
 	this.NetflixSearchAPIURL = "http://api.netflix.com/catalog/titles/autocomplete";
 	this.MadLibAPIURL = "http://dev.markitondemand.com/Meetup/MadLib/GetMadLib";
 	this.MadLibDictionaryAPIURL = "http://dev.markitondemand.com/Meetup/MadLib/GetMadLibWords";
+	
+	this.DictionaryURL = "http://api-pub.dictionary.com/v001?vid=zeyjzsq69lwncsxaeo5blb55gxt6gzhfefzd7pjhbg"
 
 	this.SetupMadLib(true);
 };
@@ -330,6 +332,21 @@ Utilities.fn.TwitterSearch = function (Element, CurrentWord, Callback, ErrorCall
 	});
 };
 
+Utilities.fn.DictionarySearch = function(word, Callback){
+	var context = this;
+	
+	$.ajax({
+		type:"GET"
+		,dataType:"JSONP"
+		,url: context.DictionaryURL
+		,data:{"q":word}
+		,success:function(Response){
+			console.log(Response);
+			//Callback(word);
+		}
+	});
+};
+
 Utilities.fn.TwitterFilterResponse = function (Response)
 {
 	try
@@ -446,8 +463,37 @@ Utilities.fn.TwitterSearchCompleted = function(Element, CurrentWord, Response)
 	try
 	{
 		var tweet = Response.results.randomItem();
-
-		$(Element).html(tweet.text);
+		var rWords = tweet.text.split(' ');
+		$(Element).text(rWords.randomItem()).css({position:'relative', display:'block'});
+		$(Element).animate({left:'+=50','font-size':'+=25'},500,function(){
+			//$(this)
+		});
+		
+		for(var word in rWords){
+		
+			/*$.ajax({
+				type:"GET"
+				,dataType:"XML"
+				,url: "http://api-pub.dictionary.com/v001?vid=zeyjzsq69lwncsxaeo5blb55gxt6gzhfefzd7pjhbg"
+				,data:{"q":word}
+				,success:function(Response){
+					console.log(Response);
+				}
+			});*/
+			
+			/*$.ajax({
+				type:"GET"
+				,dataType:"JSONP"
+				,url: 'http://www.google.com/dictionary/json?q='+rWords[word]+'&sl=en&tl=en&restrict=pr%2Cde&client=te'
+				,success:function(cool){
+					console.log(cool);
+				}
+			});*/
+		
+			//this.DictionarySearch(word, function(word){ $(Element).html(word); });
+		}
+		
+		//$(Element).html(tweet.text);
 	}
 	catch(e)
 	{

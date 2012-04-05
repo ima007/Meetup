@@ -33,7 +33,7 @@
 
 	//This is an override of the postFillHandler to add small delay when
 	//filling in the madlib words, this is a great place to get creative
-	madLibEngine.postFillHandler = function (element)
+	/*madLibEngine.postFillHandler = function (element)
 	{
 		setTimeout(function () { madLibEngine.fillNextWord(); }, 1000);
 	}
@@ -41,13 +41,14 @@
 	madLibEngine.setupWordCollection();
 
 	madLibEngine.addAndFillTemplate();
+	*/
 </script>
 
 
 <!-- OR -->
 
 <!-- FUN/API OPTION: UNCOMMENT THIS SECTION TO USE APIS -->
-<!--<script src="Content/js/Util.js"></script>
+<script src="Content/js/Util.js"></script>
 <script>
 
 	// if you want you can create your own local override of the handle preword call.
@@ -57,17 +58,24 @@
 	Util.HandleWordPreFill = function (Element, CurrentWord, WordCategory)
 	{
 		var context = this;
-
+		//console.log(Element, CurrentWord, WordCategory);
 		if (CurrentWord)
 		{
 			// below are sample API calls that you can use. You will need to specify your own success and error function,
 			// but we have gone ahead and gotten the API calls plugged in for you ahead of time.
 
-			this.BingImageSearch(Element, CurrentWord, context.BingImageSearchCompleted, function () { madLibEngine.fillNextWord(); });
+			//this.BingImageSearch(Element, CurrentWord, context.BingImageSearchCompleted, function () { madLibEngine.fillNextWord(); });
 			// this.YouTubeVideoSearch(Element, CurrentWord, context.YouTubeVideoSearchCompleted, function () { madLibEngine.fillNextWord(); });
 			// this.iTunesSeachAPI(Element, CurrentWord, function(Element, CurrentWord, Response){console.log(arguments); madLibEngine.fillNextWord();}, function(){ madLibEngine.fillNextWord(); });
 			// this.IMDBSearchAPI(Element, CurrentWord, function(Element, CurrentWord, Response){console.log(arguments); madLibEngine.fillNextWord();}, function(){ madLibEngine.fillNextWord(); });
-			// this.TwitterSearch(Element, CurrentWord, context.TwitterSearchCompleted, function(){ madLibEngine.fillNextWord(); });
+			
+				
+			this.TwitterSearch(Element, CurrentWord, context.TwitterSearchCompleted, function(Element, CurrentWord, Response){ 
+				//console.log(Response);
+				//context.DictionarySearch(Response.
+				
+				madLibEngine.fillNextWord(); 
+			});
 			// this.NetflixSearchAPI(Element, CurrentWord, functionElement, CurrentWord, Response(){console.log(arguments); madLibEngine.fillNextWord();}, function(){ madLibEngine.fillNextWord(); });
 			// this.LastFMAPISearch(Element, CurrentWord, function (Element, CurrentWord, Response) { console.log(arguments); madLibEngine.fillNextWord(); }, function () { madLibEngine.fillNextWord(); });
 		}
@@ -84,7 +92,7 @@
 	};
 	
 	// this is where you handle what happens after the word fills.
-	// called immediately after prefill.
+	// called immediately after prefill.
 	Util.HandleWordPostFill = function (Element)
 	{
 		setTimeout(function(){madLibEngine.fillNextWord()}, 1000);
@@ -95,7 +103,7 @@
 		Util.Initialize("BC1F1DBF0739F031833E8B65B3C8758F4CC9A02E", "005a62f70d2f51d694717cbaacf16ee6", "nx2pqcdk7kjyjt23x3mzd292");
 	});
 
-</script>-->
+</script>
 
 </body>
 </html>
